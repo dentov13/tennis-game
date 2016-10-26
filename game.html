@@ -36,6 +36,14 @@
 		};
 	}
 
+	function handleMouseClick(evt) {
+		if(showingWinScreen) {
+			player1Score = 0;
+			player2Score = 0;
+			showingWinScreen = false;
+		}
+	}
+
 	window.onload = function() {
 		canvas = document.getElementById('gameCanvas');
 		canvasContext = canvas.getContext('2d');
@@ -46,6 +54,8 @@
 				drawEverything();
 			}, 1000/framesPerSecond);
 
+		canvas.addEventListener('mousedown', handleMouseClick);
+
 		canvas.addEventListener('mousemove',
 			function(evt) {
 				var mousePos = calculateMousePos(evt);
@@ -54,11 +64,7 @@
 	}
 
 	function ballReset() {
-		if (player1Score >= WINNING_SCORE ||
-			player2Score >= WINNING_SCORE) {
-
-			player1Score = 0;
-			player2Score = 0;
+		if (player1Score >= WINNING_SCORE || player2Score >= WINNING_SCORE) {
 			showingWinScreen = true;
 		}
 
@@ -87,8 +93,7 @@
 		ballY = ballY + ballSpeedY;
 
 		if(ballX < 0) {
-			if(ballY > paddle1Y &&
-				ballY < paddle1Y+PADDLE_HEIGHT) {
+			if(ballY > paddle1Y && ballY < paddle1Y+PADDLE_HEIGHT) {
 				ballSpeedX = -ballSpeedX;
 
 				var deltaY = ballY-(paddle1Y+PADDLE_HEIGHT/2);
@@ -99,8 +104,7 @@
 			}
 		}
 		if(ballX > canvas.width) {
-			if(ballY > paddle2Y &&
-				ballY < paddle2Y+PADDLE_HEIGHT) {
+			if(ballY > paddle2Y && ballY < paddle2Y+PADDLE_HEIGHT) {
 				ballSpeedX = -ballSpeedX;
 
 				var deltaY = ballY-(paddle2Y+PADDLE_HEIGHT/2);
