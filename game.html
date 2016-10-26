@@ -5,7 +5,7 @@
 	<title>Tennis game</title>
 </head>
 <body>
-	<canvas id="gameCanvas" width="640" height="480"></canvas>
+	<canvas id="gameCanvas" width="800" height="600"></canvas>
 	<script>
 	var canvas;
 	var canvasContext;
@@ -122,14 +122,29 @@
 		}
 	}
 
+	function drawSeparator() {
+		for(var i=0; i<canvas.height; i+=40) {
+			colorRect(canvas.width/2-1,i,2,20,'white');
+		}
+	}
+
 	function drawEverything() {
 		colorRect(0,0,canvas.width,canvas.height,'black');
 
 		if(showingWinScreen) {
 			canvasContext.fillStyle = 'white';
-			canvasContext.fillText("click to continue", 150, 150);
+
+			if(player1Score >= WINNING_SCORE) {
+				canvasContext.fillText("Congratulations !", 350, 200);
+			} else if (player2Score >= WINNING_SCORE) {
+				canvasContext.fillText("Bot won :(", 365, 200);
+			}
+
+			canvasContext.fillText("click to continue", 350, 500);
 			return;
 		}
+
+		drawSeparator();
 
 		colorRect(0,paddle1Y,PADDLE_THICKNESS,PADDLE_HEIGHT,'white');
 
